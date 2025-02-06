@@ -11,6 +11,7 @@ export default async function Home() {
   const results = data.results;
   return (
     <div>
+      <h3 className="text-center my-2 font-bold">All Movies</h3>
       <Results results={results} />
     </div>
   );
