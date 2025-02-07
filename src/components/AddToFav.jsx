@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import axios from "axios";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 
@@ -34,22 +35,16 @@ export default function AddToFav({
       return;
     }
     try {
-      const res = await fetch("/api/user/fav", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          movieId,
-          title,
-          overview,
-          releaseDate,
-          voteCount,
-          image,
-        }),
+      const res = await axios.put("/api/user/fav", {
+        movieId,
+        title,
+        overview,
+        releaseDate,
+        voteCount,
+        image,
       });
 
-      if (res.ok) {
+      if (res.status === 200) {
         setIsFav(!isFav);
       } else {
         console.error("Failed to update favorites");

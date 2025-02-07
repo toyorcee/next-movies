@@ -1,12 +1,16 @@
 import Results from "@/components/Results";
+import axios from "axios";
 
 export default async function page({ params }) {
   const { searchTerm } = await params;
-  const res = await fetch(
-    `https://api.themoviedb.org/3/search/movie?api_key=${process.env.API_KEY}&query=${searchTerm}&language=en-US&page=1&include_adult=false`
+
+  const res = await axios.get(
+    `https://api.themoviedb.org/3/search/movie?api_key=${process.env.API_KEY}&query=${searchTerm}&language=en-US&page=1&include_adult=false`,
+    { timeout: 15000 }
   );
-  const data = await res.json();
-  const results = data.results;
+
+  const results = res.data.results;
+
   return (
     <div>
       {!results ||
